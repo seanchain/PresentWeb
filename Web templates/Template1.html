@@ -3,6 +3,7 @@
         <title>My Presentation</title>
         <meta charset="utf-8">
         <link href="../css/webpresent.css" rel="stylesheet">
+        <link href="../css/theme.css" rel="stylesheet">
     </head>
     <body class="impress-not-supported">
         <div class="fallback-message">
@@ -11,13 +12,31 @@
         </div>
         <div id="impress">
             <div id="first" class="step slide" data-x="-1000" data-y="-1500">
-                <q>Test Content 1</q>
-                        </div>
+                <tite>Your title here</tite>
+                <name>Your name here</name>
+            </div>
+            
             <div id="second" class="step slide" data-x="0" data-y="-1500">
-                <q>Test Content 2</q>
+                <q><strong>Markdown Test</strong></q>
+                <div id="from-markdown"></div>
+                <div id="markdown" style="visibility:hidden">
+                    ###Why Someone can be called Foundation？
+                    <br>
+                    * Rich
+                    * Well-equipped with device like girlfriends
+                    * Born with Foundation
+                </div>
             </div>
         </div>
         <script src="../js/impress.js"></script>
+        <script src="../js/showdown.js"></script>
         <script>impress().init();</script>
+        <script>
+            var conv = new Showdown.converter();
+            var el = document.getElementById("markdown");
+            var content = el.innerHTML.replace(/  |^\s+|\s+$/g,"\n")
+            var ret = conv.makeHtml(content);
+            document.getElementById("from-markdown").innerHTML = ret;
+        </script>
     </body>
 </html>
