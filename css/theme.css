@@ -116,7 +116,9 @@ li p.first {
 li {
   margin: 0; }
 ul, ol {
-  padding-left: 30px; }
+  padding-left: 30px; 
+  list-style-type: square;
+ }
 
 ul :first-child, ol :first-child {
   margin-top: 0; }
