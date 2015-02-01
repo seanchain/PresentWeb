@@ -148,9 +148,13 @@ a:focus {
     -o-box-sizing:      border-box;
     box-sizing:         border-box;
 
-    font-family: 'Source Han Sans CN', georgia, serif;
+    font-family: 'FZSuXinShiLiuKaiS-R-GB', georgia, serif;
     font-size: 48px;
     line-height: 1.5;
+}
+
+.step q{
+    font-size: 80px;
 }
 
 /*
@@ -186,12 +190,12 @@ a:focus {
     height: 700px;
     padding: 40px 60px;
 
-    background-color: white;
+    background-color: steelblue;
     border: 1px solid rgba(0, 0, 0, .3);
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
 
-    color: rgb(0, 0, 0);
+    color: white;
     text-shadow: 0 2px 2px rgba(0, 0, 0, .1);
 
     font-family: 'Source Han Sans CN', Arial, sans-serif;
