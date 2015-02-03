@@ -1,6 +1,6 @@
 body {
   font-family: Source Han Sans CN, arial, sans-serif;
-  font-size: 24px;
+  font-size: 14px;
   line-height: 1.6;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -27,7 +27,7 @@ a.anchor {
   bottom: 0; }
 
 h1, h2, h3, h4, h5, h6 {
-  margin: 30px 0 10px;
+  margin: 20px 0 10px;
   padding: 0;
   font-weight: bold;
   -webkit-font-smoothing: subpixel-antialiased;
@@ -57,24 +57,22 @@ h6 tt, h6 code {
   font-size: inherit; }
 
 h1 {
-  font-size: 48px;
+  font-size: 28px;
   color: black; }
 
 h2 {
-  font-size: 42px;
-  border-bottom: 5px solid #cccccc;
-  padding-bottom: 5px;
-  border-bottom-style: groove;
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
   color: black; }
 
 h3 {
-  font-size: 36px; }
+  font-size: 18px; }
 
 h4 {
-  font-size: 30px; }
+  font-size: 16px; }
 
 h5 {
-  font-size: 24px; }
+  font-size: 14px; }
 
 h6 {
   color: #777777;
@@ -116,9 +114,7 @@ li p.first {
 li {
   margin: 0; }
 ul, ol {
-  padding-left: 30px; 
-  list-style-type: square;
- }
+  padding-left: 30px; }
 
 ul :first-child, ol :first-child {
   margin-top: 0; }
@@ -274,7 +270,7 @@ pre {
   padding: 6px 10px;
   border-radius: 3px; }
   pre code, pre tt {
-	font-family:Monaco;
+    font-family:Monaco;
     background-color: transparent;
     border: none; }
 
@@ -284,7 +280,7 @@ sup {
     line-height: 0;
 }
 * {
-	-webkit-print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
 }
 @media screen and (min-width: 914px) {
     body {
@@ -293,10 +289,10 @@ sup {
     }
 }
 @media print {
-	table, pre {
-		page-break-inside: avoid;
-	}
-	pre {
-		word-wrap: break-word;
-	}
+    table, pre {
+        page-break-inside: avoid;
+    }
+    pre {
+        word-wrap: break-word;
+    }
 }
