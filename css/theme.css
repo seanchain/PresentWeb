@@ -270,8 +270,10 @@ pre {
   padding: 6px 10px;
   border-radius: 3px; }
   pre code, pre tt {
-    font-family:Monaco;
-    background-color: transparent;
+    font-family:Andale Mono;
+    font-size:17px;
+    line-height:22px;
+    font-weight:normal;
     border: none; }
 
 sup {
