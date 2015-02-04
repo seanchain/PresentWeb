@@ -1,23 +1,53 @@
 #! /usr/bin/ruby
+#
 
-class PRESENT
-  def initialize dirname
+module Command
+  def getCommand
+    if ARGV[0] == "new" and ARGV[1] != nil
+      begin
+        $f = PRESENT.new ARGV[1]
+      rescue => ex
+        puts ex.message
+      end
+    else
+      puts "CANNOT recognize the command line you have input"
+      puts "Please input like 'present new YOUR_WORKING_DIRECTORY'"
+    end
+  end
+
+  def createDirectory dirname
     begin
       Dir.mkdir dirname
     rescue => ex
-      puts ex
+      puts ex.message
+      exit
     end
-    File.chmod 0777, dirname  
-  end
+    File.chmod 0777, dirname
+  end  
+  module_function :createDirectory, :getCommand
 end
 
-if ARGV[0] == "new" and ARGV[1] != nil
-  begin
-    f = PRESENT.new ARGV[1]
-  rescue => ex
-    f = PRESENT.new "./Untitled"
-    puts ex.message, "新建默认路径"
+class PRESENT
+  def initialize dirname
+    @color, @chars, @fonts, @cdfont = "", "", "", ""
+    Command.createDirectory dirname
+    self.askForPrefrences
+    self.getTemplateFiles
   end
-else
-  puts "无法识别当前指令操作", "输入present new '文件路径'新建工程"
+  def askForPrefrences
+    puts "Please decide how your slides' going to be like..."
+    print "slide step background color: "
+    @color = $stdin.gets
+    print "slide step characters color: "
+    @chars = $stdin.gets
+    print "general fonts: "
+    @fonts = $stdin.gets
+    print "code blocks font: "
+    @cdfont = $stdin.gets
+  end
+  def getTemplateFiles
+    puts @color, @chars, @fonts, @cdfont
+  end 
 end
+
+Command.getCommand
