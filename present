@@ -1,0 +1,19 @@
+#! /usr/bin/ruby
+
+class PRESENT
+  def initialize dirname
+    Dir.mkdir dirname
+    Dir.chdir dirname
+  end
+end
+
+if ARGV[0] == "new" and ARGV[1] != nil
+  begin
+    f = PRESENT.new ARGV[1]
+  rescue => ex
+    f = PRESENT.new "./Untitled"
+    puts ex.message, "making a default directory"
+  end
+else
+  puts "lakada"
+end
