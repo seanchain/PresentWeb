@@ -7,7 +7,7 @@
 >* [highlight.js themes](https://highlightjs.org/)
 >* [highlight.js source](https://github.com/isagalaev/highlight.js)
 
-###Feature:
+####Feature:
 * Markdown Support Now, but it is not mature, so a lot of work still have to be done, but for normal use, you should write these codes:
 
 ```html
@@ -18,4 +18,6 @@
 ```
 
 
-P.S. I would appreciate a lot for the help of the impress.js
+P.S. 
+>* I would appreciate a lot for the help of the ``impress.js``, ``showdown.js`` and ``highlight.js`` ^_^
+>* Currently working on the command line code automatically generated using the language of ``ruby``
