@@ -1,4 +1,5 @@
 #! /usr/bin/ruby
+require 'open-uri'
 #
 
 module Command
@@ -29,24 +30,60 @@ end
 
 class PRESENT
   def initialize dirname
-    @color, @chars, @fonts, @cdfont = "", "", "", ""
+    @color, @chars, @chifont, @engfont, @cdfont = "", "", "", ""
     Command.createDirectory dirname
     self.askForPrefrences
     self.getTemplateFiles
+    self.createTemplate dirname
+    puts "Project created successfully!"
   end
   def askForPrefrences
     puts "Please decide how your slides' going to be like..."
     print "slide step background color: "
-    @color = $stdin.gets
+    @color = $stdin.gets.chomp
     print "slide step characters color: "
-    @chars = $stdin.gets
-    print "general fonts: "
-    @fonts = $stdin.gets
+    @chars = $stdin.gets.chomp
+    print "Chinese fonts: "
+    @chifont = $stdin.gets.chomp
+    print "English fonts: "
+    @engfont = $stdin.gets.chomp
     print "code blocks font: "
-    @cdfont = $stdin.gets
+    @cdfont = $stdin.gets.chomp
   end
+
+  def downloadFile filename, uri
+    data = open(uri, 'User-Agent' => 'ruby'){|f| f.read}
+    file = File.new filename, "w+"
+    file.binmode
+    file << data
+    file.flush
+    file.close
+  end
+
+  def createTemplate dirname
+    Dir.chdir dirname
+    Dir.mkdir "./css"
+    Dir.chdir "./css"
+    File.open "webpresent.css", "w" do |file| 
+      file.puts @presentcss
+    end
+    File.open "theme.css", "w" do |file|
+      file.puts @themecss
+    end
+    File.open "xcode.css", "w" do |file| 
+      file.puts @xcodetheme
+    end
+    Dir.mkdir "../js"
+    Dir.chdir "../js"
+    self.downloadFile "impress.js", "http://chensihang.com/materials/impress.js"
+    self.downloadFile "highlight.pack.js", "http://chensihang.com/materials/highlight.pack.js"
+    self.downloadFile "showdown.js", "http://chensihang.com/materials/showdown.js"
+  end
+
+
   def getTemplateFiles
-    presentcss = %Q{
+    @presentcss = %Q{
+
 
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
@@ -197,13 +234,19 @@ a:focus {
     -o-box-sizing:      border-box;
     box-sizing:         border-box;
 
-    font-family: 'FZSuXinShiLiuKaiS-R-GB', georgia, serif;
+    font-family: 'Source Han Sans CN', georgia, serif;
     font-size: 48px;
     line-height: 1.5;
 }
 
-.step q{
+.step qchi{
     font-size: 80px;
+    font-family: #{@chifont}
+}
+
+.step qeng{
+    font-size:80px;
+    font-family: #{@engfont}
 }
 
 /*
@@ -239,21 +282,31 @@ a:focus {
     height: 700px;
     padding: 40px 60px;
 
-    background-color: steelblue;
+    background-color: #{@color};
     border: 1px solid rgba(0, 0, 0, .3);
     border-radius: 10px;
     box-shadow: 0 2px 6px rgba(0, 0, 0, .1);
 
-    color: white;
+    color: #{@chars};
     text-shadow: 0 2px 2px rgba(0, 0, 0, .1);
 
-    font-family: 'Source Han Sans CN', Arial, sans-serif;
+    font-family: 'Fira Sans', Arial, sans-serif;
     font-size: 30px;
     line-height: 36px;
     letter-spacing: -1px;
 }
 
-.slide q {
+.slide qchi {
+    font-family: '#{@chifont}', Arial, sans-serif;
+    display: block;
+    font-size: 45px;
+    line-height: 72px;
+
+    margin-top: 100px;
+}
+
+.slide qeng {
+    font-family: '#{@engfont}', Arial, sans-serif;
     display: block;
     font-size: 50px;
     line-height: 72px;
@@ -496,6 +549,7 @@ a:focus {
     -moz-transform:    translateZ(-40px);
     -ms-transform:     translateZ(-40px);
     -o-transform:      translateZ(-40px);
+    transform:         translateZ(-40px);
     transform:         translateZ(-40px);
 }
 
@@ -745,13 +799,14 @@ a:focus {
 
 
 /*Add Markdown feature here*/
+  
 
-    }
-
-    themecss = %Q{
+}
+  
+    @themecss = %Q{
 body {
   font-family: Source Han Sans CN, arial, sans-serif;
-  font-size: 24px;
+  font-size: 14px;
   line-height: 1.6;
   padding-top: 10px;
   padding-bottom: 10px;
@@ -778,7 +833,7 @@ a.anchor {
   bottom: 0; }
 
 h1, h2, h3, h4, h5, h6 {
-  margin: 30px 0 10px;
+  margin: 20px 0 10px;
   padding: 0;
   font-weight: bold;
   -webkit-font-smoothing: subpixel-antialiased;
@@ -808,24 +863,22 @@ h6 tt, h6 code {
   font-size: inherit; }
 
 h1 {
-  font-size: 48px;
+  font-size: 28px;
   color: black; }
 
 h2 {
-  font-size: 42px;
-  border-bottom: 5px solid #cccccc;
-  padding-bottom: 5px;
-  border-bottom-style: groove;
+  font-size: 24px;
+  border-bottom: 1px solid #cccccc;
   color: black; }
 
 h3 {
-  font-size: 36px; }
+  font-size: 18px; }
 
 h4 {
-  font-size: 30px; }
+  font-size: 16px; }
 
 h5 {
-  font-size: 24px; }
+  font-size: 14px; }
 
 h6 {
   color: #777777;
@@ -867,9 +920,7 @@ li p.first {
 li {
   margin: 0; }
 ul, ol {
-  padding-left: 30px; 
-  list-style-type: square;
- }
+  padding-left: 30px; }
 
 ul :first-child, ol :first-child {
   margin-top: 0; }
@@ -1025,8 +1076,10 @@ pre {
   padding: 6px 10px;
   border-radius: 3px; }
   pre code, pre tt {
-	font-family:Monaco;
-    background-color: transparent;
+    font-family:#{@cdfont};
+    font-size:17px;
+    line-height:22px;
+    font-weight:normal;
     border: none; }
 
 sup {
@@ -1035,7 +1088,7 @@ sup {
     line-height: 0;
 }
 * {
-	-webkit-print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
 }
 @media screen and (min-width: 914px) {
     body {
@@ -1044,19 +1097,180 @@ sup {
     }
 }
 @media print {
-	table, pre {
-		page-break-inside: avoid;
-	}
-	pre {
-		word-wrap: break-word;
-	}
+    table, pre {
+        page-break-inside: avoid;
+    }
+    pre {
+        word-wrap: break-word;
+    }
 }
-      
+
+
+}
+
+    @xcodetheme = %Q{
+
+/*
+
+XCode style (c) Angel Garcia <angelgarcia.mail@gmail.com>
+
+*/
+
+.hljs {
+  display: block;
+  overflow-x: auto;
+  padding: 0.5em;
+  background: #fff;
+  color: black;
+  -webkit-text-size-adjust: none;
+}
+
+.hljs-comment,
+.hljs-javadoc {
+  color: #006a00;
+}
+
+.hljs-keyword,
+.hljs-literal,
+.nginx .hljs-title {
+  color: #aa0d91;
+}
+.method,
+.hljs-list .hljs-title,
+.hljs-tag .hljs-title,
+.setting .hljs-value,
+.hljs-winutils,
+.tex .hljs-command,
+.http .hljs-title,
+.hljs-request,
+.hljs-status {
+  color: #008;
+}
+
+.hljs-envvar,
+.tex .hljs-special {
+  color: #660;
+}
+
+.hljs-string {
+  color: #c41a16;
+}
+.hljs-tag .hljs-value,
+.hljs-cdata,
+.hljs-filter .hljs-argument,
+.hljs-attr_selector,
+.apache .hljs-cbracket,
+.hljs-date,
+.hljs-regexp {
+  color: #080;
+}
+
+.hljs-sub .hljs-identifier,
+.hljs-pi,
+.hljs-tag,
+.hljs-tag .hljs-keyword,
+.hljs-decorator,
+.ini .hljs-title,
+.hljs-shebang,
+.hljs-prompt,
+.hljs-hexcolor,
+.hljs-rules .hljs-value,
+.hljs-symbol,
+.hljs-symbol .hljs-string,
+.hljs-number,
+.css .hljs-function,
+.hljs-function .hljs-title,
+.coffeescript .hljs-attribute {
+  color: #1c00cf;
+}
+
+.hljs-class .hljs-title,
+.smalltalk .hljs-class,
+.hljs-javadoctag,
+.hljs-yardoctag,
+.hljs-phpdoc,
+.hljs-dartdoc,
+.hljs-type,
+.hljs-typename,
+.hljs-tag .hljs-attribute,
+.hljs-doctype,
+.hljs-class .hljs-id,
+.hljs-built_in,
+.setting,
+.hljs-params,
+.clojure .hljs-attribute {
+  color: #5c2699;
+}
+
+.hljs-variable {
+ color: #3f6e74;
+}
+.css .hljs-tag,
+.hljs-rules .hljs-property,
+.hljs-pseudo,
+.hljs-subst {
+  color: #000;
+}
+
+.css .hljs-class,
+.css .hljs-id {
+  color: #9b703f;
+}
+
+.hljs-value .hljs-important {
+  color: #ff7700;
+  font-weight: bold;
+}
+
+.hljs-rules .hljs-keyword {
+  color: #c5af75;
+}
+
+.hljs-annotation,
+.apache .hljs-sqbracket,
+.nginx .hljs-built_in {
+  color: #9b859d;
+}
+
+.hljs-preprocessor,
+.hljs-preprocessor *,
+.hljs-pragma {
+  color: #643820;
+}
+
+.tex .hljs-formula {
+  background-color: #eee;
+  font-style: italic;
+}
+
+.diff .hljs-header,
+.hljs-chunk {
+  color: #808080;
+  font-weight: bold;
+}
+
+.diff .hljs-change {
+  background-color: #bccff9;
+}
+
+.hljs-addition {
+  background-color: #baeeba;
+}
+
+.hljs-deletion {
+  background-color: #ffc8bd;
+}
+
+.hljs-comment .hljs-yardoctag {
+  font-weight: bold;
+}
+
+.method .hljs-id {
+  color: #000;
+}
 
     }
 
-
-    
   end
 end
 
