@@ -2,8 +2,12 @@
 
 class PRESENT
   def initialize dirname
-    Dir.mkdir dirname
-    Dir.chdir dirname
+    begin
+      Dir.mkdir dirname
+    rescue => ex
+      puts ex
+    end
+    File.chmod 0777, dirname  
   end
 end
 
@@ -12,8 +16,8 @@ if ARGV[0] == "new" and ARGV[1] != nil
     f = PRESENT.new ARGV[1]
   rescue => ex
     f = PRESENT.new "./Untitled"
-    puts ex.message, "making a default directory"
+    puts ex.message, "新建默认路径"
   end
 else
-  puts "lakada"
+  puts "无法识别当前指令操作", "输入present new '文件路径'新建工程"
 end
