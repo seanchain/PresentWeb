@@ -198,13 +198,23 @@ a:focus {
     color: white;
     text-shadow: 0 2px 2px rgba(0, 0, 0, .1);
 
-    font-family: 'Source Han Sans CN', Arial, sans-serif;
+    font-family: 'Fira Sans', Arial, sans-serif;
     font-size: 30px;
     line-height: 36px;
     letter-spacing: -1px;
 }
 
-.slide q {
+.slide qchi {
+    font-family: 'Source Han Sans CN', Arial, sans-serif;
+    display: block;
+    font-size: 45px;
+    line-height: 72px;
+
+    margin-top: 100px;
+}
+
+.slide qeng {
+    font-family: 'Fira Sans', Arial, sans-serif;
     display: block;
     font-size: 50px;
     line-height: 72px;
