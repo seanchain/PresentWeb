@@ -16,8 +16,14 @@
     	Your Markdown Code Here...
      </div>
 ```
+* Being able to create the project folder using the file present
+>Instructions
+>* Download the master.zip file or using git clone ``git clone https://github.com/seanchain/PresentWeb``
+>* Unzip the compressed file or just open the cloned folder and drag the ``present`` file to ``/usr/bin`` folder
+>* using the command line tools like ``Terminal`` to run script ``present new YOUR_PROJECT_NAME`` to create a working directory with css files and JavaScript files
 
 
 P.S. 
 >* I would appreciate a lot for the help of the ``impress.js``, ``showdown.js`` and ``highlight.js`` ^_^
->* Currently working on the command line code automatically generated using the language of ``ruby``
+>* Make sure Your computer can run a ruby enviornment and the interpreter is in the path ``/usr/bin/ruby``
+>* Windows not support the command tools for some reasons
