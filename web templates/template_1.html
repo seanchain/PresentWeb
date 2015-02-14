@@ -58,6 +58,12 @@
                 *I love to be there for you...*
             </div>
         </div>
+        
+            <script>
+        var ret2 = conv.makeHtml(document.getElementById("markdown2").innerHTML.replace(/  |^\s+|\s+$/g,"\n"));
+        document.getElementById("from-markdown2").innerHTML = ret2;
+    </script>
+        
         <div id="step4" class="step" data-x="3000" data-y="5000" data-rotate="70" data-scale="5">
             <q>Hello, world</q>
         </div>
@@ -96,11 +102,7 @@ end
     
 
     <script>impress().init();</script>
-    <script>
-        var conv = new Showdown.converter();
-        var ret2 = conv.makeHtml(document.getElementById("markdown2").innerHTML.replace(/  |^\s+|\s+$/g,"\n"));
-        document.getElementById("from-markdown2").innerHTML = ret2;
-    </script>
+
 
 </body>
 </html>
