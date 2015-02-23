@@ -78,6 +78,7 @@ class PRESENT
     self.downloadFile "impress.js", "http://chensihang.com/materials/impress.js"
     self.downloadFile "highlight.pack.js", "http://chensihang.com/materials/highlight.pack.js"
     self.downloadFile "showdown.js", "http://chensihang.com/materials/showdown.js"
+    self.downloadFile "key.js", "http://chensihang.com/materials/key.js"
     Dir.chdir "../"
     self.downloadFile "template.html", "http://chensihang.com/materials/template.html"
   end
